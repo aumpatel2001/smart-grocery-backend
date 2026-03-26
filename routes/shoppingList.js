@@ -1,11 +1,12 @@
 // routes/shoppingList.js
+// Shopping list CRUD API for authenticated users.
 const express = require("express");
 const db = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// ✅ Get shopping list for logged-in user
+//  Get shopping list for logged-in user
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const [items] = await db.query(
@@ -18,7 +19,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Add item to shopping list
+//  Add item to shopping list
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { item_name, quantity } = req.body || {};
@@ -36,7 +37,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Update item (quantity / purchased)
+//  Update item (quantity / purchased)
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
     const { quantity, purchased } = req.body || {};
@@ -57,7 +58,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Mark as purchased
+//  Mark as purchased
 router.patch("/:id/purchased", authMiddleware, async (req, res) => {
   try {
     const [result] = await db.query(
@@ -73,7 +74,7 @@ router.patch("/:id/purchased", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Delete item
+//  Delete item
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const [result] = await db.query(

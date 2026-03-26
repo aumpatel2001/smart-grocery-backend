@@ -1,4 +1,5 @@
 // routes/auth.js
+// Auth routes for registering and logging in users using JWT.
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -6,10 +7,10 @@ const db = require("../db");
 
 const router = express.Router();
 
-// ✅ test route
-router.get("/test", (req, res) => res.send("auth route working ✅"));
+// health/test endpoint for this router
+router.get("/test", (req, res) => res.send("auth route working"));
 
-// ✅ REGISTER
+// REGISTER
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body || {};
@@ -42,7 +43,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ✅ LOGIN
+//  LOGIN
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};

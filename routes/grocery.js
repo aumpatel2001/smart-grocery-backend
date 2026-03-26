@@ -1,4 +1,5 @@
 // routes/grocery.js
+// Grocery management API (CRUD + status transitions + auto-expire) for authenticated users.
 const express = require("express");
 const db = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
@@ -22,7 +23,7 @@ async function autoExpire(userId) {
   );
 }
 
-// ✅ Get all grocery items
+//  Get all grocery items
 router.get("/", authMiddleware, async (req, res) => {
   try {
     await autoExpire(req.user.id);
@@ -38,7 +39,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Get items expiring soon (next 3 days)
+//  Get items expiring soon (next 3 days)
 router.get("/expiring-soon", authMiddleware, async (req, res) => {
   try {
     await autoExpire(req.user.id);
@@ -60,7 +61,7 @@ router.get("/expiring-soon", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Get expired items
+//  Get expired items
 router.get("/expired", authMiddleware, async (req, res) => {
   try {
     await autoExpire(req.user.id);
@@ -80,7 +81,7 @@ router.get("/expired", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Get available items
+//  Get available items
 router.get("/available", authMiddleware, async (req, res) => {
   try {
     await autoExpire(req.user.id);
@@ -100,7 +101,7 @@ router.get("/available", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Get consumed items
+//  Get consumed items
 router.get("/consumed", authMiddleware, async (req, res) => {
   try {
     const [items] = await db.query(
@@ -118,7 +119,7 @@ router.get("/consumed", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Add grocery item
+//  Add grocery item
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { item_name, quantity, category, expiry_date } = req.body || {};
@@ -149,7 +150,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Update grocery item
+//  Update grocery item
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
     const { item_name, quantity, category, expiry_date, status } = req.body || {};
@@ -183,7 +184,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Mark as consumed
+//  Mark as consumed
 router.patch("/:id/consume", authMiddleware, async (req, res) => {
   try {
     const [result] = await db.query(
@@ -201,7 +202,7 @@ router.patch("/:id/consume", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Mark as expired manually (optional)
+//  Mark as expired manually (optional)
 router.patch("/:id/expire", authMiddleware, async (req, res) => {
   try {
     const [result] = await db.query(
@@ -219,7 +220,7 @@ router.patch("/:id/expire", authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ Delete grocery item
+//  Delete grocery item
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const [result] = await db.query(

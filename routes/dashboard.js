@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
 
+// Dashboard stats endpoint to aggregate grocery inventory counts per user.
 const router = express.Router();
 
 router.get("/", authMiddleware, async (req, res) => {
