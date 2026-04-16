@@ -4,5 +4,7 @@ node_modules
 .DS_Store
 /dist
 /build
+client/node_modules
+client/dist
 .vscode/settings.json
 certs/
