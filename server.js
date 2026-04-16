@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //  health check
-app.get("/", (req, res) => res.send("Backend is running ✅"));
+app.get("/api/health", (req, res) => res.send("Backend is running ✅"));
 
 //  auth routes
 app.use("/api/auth", authRoutes);
