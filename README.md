@@ -19,6 +19,18 @@ Full-stack grocery tracker with: auth, item expiry management, shopping list, da
 3. `npm run dev`
 4. Open `http://localhost:5173`.
 
+## Deploying on Render
+
+To deploy both frontend and backend from one Render service:
+
+1. Connect your GitHub repo to Render and create a new Web Service.
+2. Set the root directory to the repo root (`/`).
+3. Use build command: `npm install && npm run build`
+4. Use start command: `npm start`
+5. Add the required environment variables for your database and `JWT_SECRET`.
+
+This configuration builds the React app into `client/dist` and serves it from the Express backend at the same domain.
+
 ## API endpoints
 - `POST /api/auth/register`
 - `POST /api/auth/login`

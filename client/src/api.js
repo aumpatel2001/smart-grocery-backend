@@ -1,6 +1,6 @@
 // API client helper for frontend.
-// Uses environment variable override `VITE_API_BASE` or defaults to backend URL.
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5001/api';
+// Uses environment variable override `VITE_API_BASE` or defaults to a same-origin API path.
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 // persisted JWT token in localStorage
 export const getToken = () => localStorage.getItem('smartGroceryToken');

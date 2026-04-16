@@ -1,6 +1,7 @@
 // server.js
 // Entry point for backend Express application, using environment vars, CORS, JSON parsing, and route setup
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
@@ -44,6 +45,12 @@ app.get("/protected", authMiddleware, (req, res) => {
 //  optional debug
 app.post("/echo", (req, res) => {
   res.json({ received: req.body, contentType: req.headers["content-type"] });
+});
+
+// Serve frontend build assets from client/dist when deployed as a single Render service.
+app.use(express.static(path.join(__dirname, "client", "dist")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
 const PORT = Number(process.env.PORT) || 5001;
