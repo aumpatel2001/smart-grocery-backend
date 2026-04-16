@@ -17,7 +17,9 @@ Full-stack grocery tracker with: auth, item expiry management, shopping list, da
 1. cd `smart-grocery-backend/client`
 2. `npm install`
 3. `npm run dev`
-4. Open `http://localhost:5173`.
+4. Open `http://localhost:5173`
+
+The Vite dev server now proxies `/api` to `http://localhost:5001`, so the frontend works with the backend during local development.
 
 ## Deploying on Render
 
