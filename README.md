@@ -31,6 +31,16 @@ To deploy both frontend and backend from one Render service:
 
 This configuration builds the React app into `client/dist` and serves it from the Express backend at the same domain.
 
+## Render manifest
+
+A Render service manifest is included at `render.yaml`. It defines a single web service that:
+
+- builds the app with `npm install && npm run build`
+- starts the backend with `npm start`
+- serves both the API and static frontend from one domain
+
+Set the required environment variables in the Render dashboard or replace the empty values in `render.yaml`.
+
 ## API endpoints
 - `POST /api/auth/register`
 - `POST /api/auth/login`
