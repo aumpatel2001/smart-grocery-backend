@@ -35,33 +35,70 @@ function ShoppingList() {
   };
 
   return (
-    <div>
-      <h2>Shopping List</h2>
-      {error && <p className="error">{error}</p>}
-      <div className="card">
-        <h3>Add</h3>
-        <form onSubmit={handleAdd}>
-          <input placeholder="Item" value={name} onChange={(e) => setName(e.target.value)} required />
-          <input type="number" min="1" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
-          <button type="submit">Add</button>
-        </form>
-      </div>
+    <div className="page-shell">
+      <section className="section-header">
+        <span className="eyebrow">market list</span>
+        <h2>Shopping list</h2>
+        <p>Curate each purchase with calm clarity and keep your kitchen balanced.</p>
+      </section>
 
-      <div className="card">
-        <h3>Items</h3>
-        {items.length === 0 && <p>Empty</p>}
-        <ul>
-          {items.map((item) => (
-            <li key={item.id}>
-              <span>{item.item_name} x{item.quantity} {item.purchased ? '(purchased)' : ''}</span>
-              <div style={{ marginTop: 6 }}>
-                {!item.purchased && <button onClick={() => patchShoppingItem(item.id)}>Mark Purchased</button>}
-                <button onClick={() => handleUpdate(item)}>Edit</button>
-                <button onClick={() => deleteShoppingItem(item.id).then(load).catch((e) => setError(e.message))}>Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {error && <p className="error">{error}</p>}
+
+      <div className="grid-2">
+        <section className="card">
+          <h3>Add</h3>
+          <form onSubmit={handleAdd} className="form-grid">
+            <div className="field-group">
+              <label>Item</label>
+              <input
+                className="input-field"
+                placeholder="Item"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="field-group">
+              <label>Quantity</label>
+              <input
+                className="input-field"
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="button button-primary">Add</button>
+          </form>
+        </section>
+
+        <section className="card">
+          <h3>Items</h3>
+          {items.length === 0 ? (
+            <p className="subtle">Empty</p>
+          ) : (
+            <ul className="item-list">
+              {items.map((item) => (
+                <li key={item.id} className="item-card">
+                  <div className="item-title-row">
+                    <strong>{item.item_name}</strong>
+                    <span className="item-meta">x{item.quantity} {item.purchased ? '· Purchased' : ''}</span>
+                  </div>
+                  <div className="action-bar">
+                    {!item.purchased && (
+                      <button type="button" className="button button-secondary" onClick={() => patchShoppingItem(item.id).then(load).catch((e) => setError(e.message))}>
+                        <span>Mark Purchased</span>
+                      </button>
+                    )}
+                    <button type="button" className="button button-secondary" onClick={() => handleUpdate(item)}>Edit</button>
+                    <button type="button" className="button button-secondary" onClick={() => deleteShoppingItem(item.id).then(load).catch((e) => setError(e.message))}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </div>
     </div>
   );

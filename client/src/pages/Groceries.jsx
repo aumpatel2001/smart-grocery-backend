@@ -17,9 +17,7 @@ function Groceries() {
     }
   };
 
-  useEffect(() => {
-    refresh();
-  }, []);
+  useEffect(() => { refresh(); }, []);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -68,57 +66,87 @@ function Groceries() {
   };
 
   return (
-    <div>
-      <h2>Groceries</h2>
-      {error && <p className="error">{error}</p>}
-      <div className="card">
-        <h3>Add Item</h3>
-        <form onSubmit={handleAdd}>
-          <input
-            placeholder="Item name"
-            value={item.item_name}
-            onChange={(e) => setItem({ ...item, item_name: e.target.value })}
-            required
-          />
-          <input
-            type="number"
-            min="1"
-            value={item.quantity}
-            onChange={(e) => setItem({ ...item, quantity: e.target.value })}
-            required
-          />
-          <input
-            placeholder="Category"
-            value={item.category}
-            onChange={(e) => setItem({ ...item, category: e.target.value })}
-          />
-          <input
-            type="date"
-            value={item.expiry_date}
-            onChange={(e) => setItem({ ...item, expiry_date: e.target.value })}
-          />
-          <button type="submit">Add</button>
-        </form>
-      </div>
+    <div className="page-shell">
+      <section className="section-header">
+        <span className="eyebrow">Pantry edit</span>
+        <h2>Groceries</h2>
+        <p>Maintain a quiet, elevated inventory with clear status and gentle ritual.</p>
+      </section>
 
-      <div className="card">
-        <h3>Items</h3>
-        {items.length === 0 && <p>No groceries yet.</p>}
-        <ul>
-          {items.map((i) => (
-            <li key={i.id}>
-              <strong>{i.item_name}</strong> x{i.quantity} | {i.category || 'uncategorized'} | {i.status}
-              <br />
-              <small>expires: {i.expiry_date || 'n/a'}</small>
-              <div style={{ marginTop: 6 }}>
-                <button onClick={() => mark(i.id, 'consume')}>Consumed</button>
-                <button onClick={() => mark(i.id, 'expire')}>Expire</button>
-                <button onClick={() => update(i.id)}>Edit</button>
-                <button onClick={() => remove(i.id)}>Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {error && <p className="error">{error}</p>}
+
+      <div className="grid-2">
+        <section className="card">
+          <h3>Add item</h3>
+          <form onSubmit={handleAdd} className="form-grid">
+            <div className="field-group">
+              <label>Item name</label>
+              <input
+                className="input-field"
+                placeholder="Item name"
+                value={item.item_name}
+                onChange={(e) => setItem({ ...item, item_name: e.target.value })}
+                required
+              />
+            </div>
+            <div className="field-group">
+              <label>Quantity</label>
+              <input
+                className="input-field"
+                type="number"
+                min="1"
+                value={item.quantity}
+                onChange={(e) => setItem({ ...item, quantity: e.target.value })}
+                required
+              />
+            </div>
+            <div className="field-group">
+              <label>Category</label>
+              <input
+                className="input-field"
+                placeholder="Category"
+                value={item.category}
+                onChange={(e) => setItem({ ...item, category: e.target.value })}
+              />
+            </div>
+            <div className="field-group">
+              <label>Expiry date</label>
+              <input
+                className="input-field"
+                type="date"
+                value={item.expiry_date}
+                onChange={(e) => setItem({ ...item, expiry_date: e.target.value })}
+              />
+            </div>
+            <button type="submit" className="button button-primary">Add</button>
+          </form>
+        </section>
+
+        <section className="card">
+          <h3>Items</h3>
+          {items.length === 0 ? (
+            <p className="subtle">No groceries yet.</p>
+          ) : (
+            <ul className="item-list">
+              {items.map((i) => (
+                <li key={i.id} className="item-card">
+                  <div className="item-title-row">
+                    <strong>{i.item_name}</strong>
+                    <span className="item-meta">{i.category || 'Uncategorized'} · {i.status}</span>
+                  </div>
+                  <p className="item-info">Quantity: {i.quantity}</p>
+                  <small>Expires: {i.expiry_date || 'n/a'}</small>
+                  <div className="action-bar">
+                    <button type="button" className="button button-secondary" onClick={() => mark(i.id, 'consume')}>Consumed</button>
+                    <button type="button" className="button button-secondary" onClick={() => mark(i.id, 'expire')}>Expire</button>
+                    <button type="button" className="button button-secondary" onClick={() => update(i.id)}>Edit</button>
+                    <button type="button" className="button button-secondary" onClick={() => remove(i.id)}>Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </div>
     </div>
   );

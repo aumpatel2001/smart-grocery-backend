@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login, saveSession } from '../api';
 
 function Login({ onLogin }) {
@@ -26,33 +26,45 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="card">
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>Login</button>
-      </form>
-      <p>
-        Don’t have an account? <a href="/register">Register</a>
-      </p>
+    <div className="page-shell auth-page">
+      <section className="section-header">
+        <span className="eyebrow">Return to curated living</span>
+        <h2>Sign in and keep your pantry intentional.</h2>
+        <p>Every grocery item becomes a deliberate choice from the moment it enters your kitchen.</p>
+      </section>
+
+      <section className="card auth-card">
+        <h3>Sign In</h3>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit} className="form-grid">
+          <div className="field-group">
+            <label>Email</label>
+            <input
+              className="input-field"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="field-group">
+            <label>Password</label>
+            <input
+              className="input-field"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="button button-primary" disabled={loading}>
+            <span>Continue</span>
+          </button>
+        </form>
+        <p className="auth-footnote">
+          Don’t have an account? <Link className="button-link" to="/register">Create one</Link>
+        </p>
+      </section>
     </div>
   );
 }
